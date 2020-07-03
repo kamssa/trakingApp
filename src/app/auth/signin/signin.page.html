@@ -1,0 +1,40 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="home" mode="md"></ion-back-button>
+        </ion-buttons>
+        <ion-title>Connexion</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+    <ion-card mode="ios" rel="string | undefined" color="primary">
+        <form [formGroup]="connexionForm" (ngSubmit)="onSubmit()">
+
+                <ion-item>
+                    <ion-input type="text" placeholder="login" formControlName="login"></ion-input>
+                </ion-item>
+                <ion-item>
+
+                    <ion-input type="text" placeholder="identifiantUuid" formControlName="identifiantUuid"></ion-input>
+                </ion-item>
+
+                <ion-item>
+
+                    <ion-input type="text" placeholder="latitude" formControlName="latitude"></ion-input>
+                </ion-item>
+          <ion-item>
+                <ion-input type="text" placeholder="longitude" formControlName="longitude"></ion-input>
+          </ion-item>
+
+            <ion-item>
+
+                <ion-input type="text" placeholder="password" formControlName="password"></ion-input>
+            </ion-item>
+            <ion-button type="submit" expand="block" color="success" [disabled]="!connexionForm.valid">Valider
+            </ion-button>
+        </form>
+
+    </ion-card>
+</ion-content>
