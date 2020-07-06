@@ -12,6 +12,8 @@ export class AuthService {
   private urlAbonnes = 'http://localhost:8080/signupAbonne';
   private urlAbonnesByUUid = 'http://localhost:8080/abonnes';
   private urlgetConfinesByParam = 'http://localhost:8080/getConfinesByParam';
+  private urlAllConfine = 'http://localhost:8080/confine';
+  private urlmodifAbonne = 'http://localhost:8080/abonnes';
 
   // observables sources
   private abonnesCreerSource = new Subject<Resultat<Abonnes>>();
@@ -29,8 +31,8 @@ export class AuthService {
   constructor(private  http: HttpClient) {
   }
 
-  getAllAbonness(): Observable<Resultat<Abonnes[]>> {
-    return this.http.get<Resultat<Abonnes[]>>(this.urlAbonnes);
+  getAllConfines(): Observable<Resultat<Confines[]>> {
+    return this.http.get<Resultat<Confines[]>>(this.urlAllConfine);
   }
 
   ajoutAbonnes(ens: Abonnes): Observable<Resultat<Abonnes>> {
@@ -38,8 +40,8 @@ export class AuthService {
     return this.http.post<Resultat<Abonnes>>(this.urlAbonnes, ens);
   }
 
-  modifierEAbonnes(ensModif: Abonnes): Observable<Resultat<Abonnes>> {
-    return this.http.put<Resultat<Abonnes>>(this.urlAbonnes, ensModif);
+  modifierAbonnes(ensModif: Abonnes): Observable<Resultat<Abonnes>> {
+    return this.http.put<Resultat<Abonnes>>(this.urlmodifAbonne, ensModif);
   }
 
   // supprimer un enseignant

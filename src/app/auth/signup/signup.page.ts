@@ -3,6 +3,8 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 import {Abonnes} from '../../modele/abonnes';
 import {AuthService} from '../../service/auth.service';
 import {Plugins} from '@capacitor/core';
+import {ToastController} from '@ionic/angular';
+import {Router} from '@angular/router';
 const { Geolocation } = Plugins;
 const { Device } = Plugins;
 const { Storage } = Plugins;
@@ -17,7 +19,8 @@ export class SignupPage implements OnInit {
   latitude: number;
   longitude: number;
   uuid: string;
-  constructor( private  fb: FormBuilder, private  authService: AuthService) {
+  constructor( private  fb: FormBuilder, private  authService: AuthService ,
+               public toastController: ToastController, private  router: Router) {
     this.getUuid();
     this.getCurrentPosition();
 
@@ -52,12 +55,7 @@ export class SignupPage implements OnInit {
     Geolocation.getCurrentPosition().then(res => {
      this.latitude = res.coords.latitude;
      this.longitude = res.coords.longitude;
-     console.log(this.latitude);
-     console.log(this.longitude);
-     console.log('Current', res.coords.latitude);
-     this.authService.getConfineByParam(this.latitude, this.longitude).subscribe(result => {
-       console.log(result.body);
-     });
+
     });
 
   }
@@ -78,10 +76,17 @@ export class SignupPage implements OnInit {
 
     );
     this.authService.ajoutAbonnes(abonnes).subscribe(res => {
+      this.presentToast('Opération effectuée avec succès');
       console.log('creation effectue', res.body);
-    });
-    console.log(abonnes);
-   // console.log(this.signupForm.value);
-  }
 
+    });
+   this.router.navigate(['home']);
+  }
+  async presentToast(texte: string) {
+    const toast = await this.toastController.create({
+      message: texte,
+      duration: 2000
+    });
+    toast.present();
+  }
 }
